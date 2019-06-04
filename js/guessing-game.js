@@ -9,7 +9,8 @@ a user clicks a button or adds a guess to the input field.
 */
 
 function generateWinningNumber() {
-    const num = Math.random() * 100;
+    // const num = Math.random() * 100;
+    const num = Math.random() * 1000;
 
     return Math.ceil(num);
 }
@@ -72,28 +73,55 @@ class Game {
             this.pastGuesses.push(this.playersGuess);
             this.count++;
 
-            if (this.count >= 5) return 'You Lose.';
+            // if (this.count >= 5) return 'You Lose.';
+            if (this.count >= 10) return 'You Lose.';
         }
 
+        // switch(true) {
+        //     case this.difference() < 10:
+        //         return "You're burning up!";
+        //     case this.difference() < 25:
+        //         return "You're lukewarm.";
+        //     case this.difference() < 50:
+        //         return "You're a bit chilly.";
+        //     case this.difference() < 100:
+        //         return "You're ice cold!";
+        // }
+
         switch(true) {
-            case this.difference() < 10:
-                return "You're burning up!";
-            case this.difference() < 25:
-                return "You're lukewarm.";
-            case this.difference() < 50:
-                return "You're a bit chilly.";
-            case this.difference() < 100:
-                return "You're ice cold!";
+            case this.difference() <= 5:
+                return "So close. (within 5)";
+            case this.difference() <= 10:
+                return "Red Hot. (within 10)";
+            case this.difference() <= 15:
+                return "Getting Hot. (within 15)";
+            case this.difference() <= 25:
+                return "Great guess. (within 25)";
+            case this.difference() <= 50:
+                return "Getting warmer. (within 50)";
+            case this.difference() <= 75:
+                return "Getting warm. (within 75)";
+            case this.difference() <= 100:
+                return "You're in the Ballpark. (within 100)";
+            case this.difference() > 150:
+                return "You're a bit chilly. (off by over 150)";
+            case this.difference() > 200:
+                return "You're ice cold! (off by over 200)";
         }
     }
 
+    // provideHint() {
+    //     let nums = [this.winningNumber];
+
+    //     nums.push(generateWinningNumber());
+    //     nums.push(generateWinningNumber());
+
+    //     return shuffle(nums);
+    // }
+
     provideHint() {
-        let nums = [this.winningNumber];
-
-        nums.push(generateWinningNumber());
-        nums.push(generateWinningNumber());
-
-        return shuffle(nums);
+        if (this.isLower()) return "Guess Higher";
+        else return "Guess Lower";
     }
 }
 
