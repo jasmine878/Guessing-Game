@@ -86,4 +86,21 @@ class Game {
                 return "You're ice cold!";
         }
     }
+
+    provideHint() {
+        let nums = [this.winningNumber];
+
+        nums.push(generateWinningNumber());
+        nums.push(generateWinningNumber());
+
+        return shuffle(nums);
+    }
 }
+
+function newGame() {
+    return new Game();
+}
+
+
+
+
