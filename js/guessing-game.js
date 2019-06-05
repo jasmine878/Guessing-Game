@@ -193,7 +193,30 @@ function playGame() {
     })
 
     restart.addEventListener('click', function() {
+        //USE CONSOLE.LOG IN GOOGLE CHROME CONSOLE TO SEE THE WINNING NUMBER
+        //NOTICE THE WINNING NUMBER CHANGES WHEN WE RESET IT!!!
+        // console.log(game);
+
         game = newGame();
+
+        // console.log(game);
+        //EVEN THOUGH WE RESET THE GAME IN JAVASCRIPT, I NEED TO GO BACK AND RESET ALL OF MY FRONTEND
+        //I NEED TO RESET THE DOM.
+        //LOOKS LIKE I NEED TO CLEAR MY PREVIOUS GUESSES, MY FEEDBACK MESSAGE, AND MY HINT MESSAGE.
+        //START EVERYTHING OVER
+
+        let previousGuess,
+            displayBox;
+
+        for (let i = 1; i <= 10; i++) {
+            previousGuess = document.getElementById(`guess${i}`);
+            previousGuess.innerHTML = '';
+        }
+
+        secondMessage.innerHTML = '';
+
+        displayBox = document.getElementById("finalMessage");
+        displayBox.innerHTML = '';
     })
 }
 
