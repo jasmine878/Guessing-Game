@@ -55,59 +55,86 @@ class Game {
     }
 
     playersGuessSubmission(num) {
-        this.playersGuess = num;
-
-        if (num < 1 || num > 100 || typeof num !== 'number') {
+        
+        // if (num < 1 || num > 100 || typeof num !== 'number') {
+        if (num < 1 || num > 1000 || typeof num !== 'number') {
             throw 'That is an invalid guess.';
         } else {
-            return this.checkGuess();
+            this.playersGuess = num;
+            this.checkGuess();
         }
+        
+
+
     }
 
     checkGuess() {
+        let feedbackText,
+            displayBox,
+            previousGuess;
+
         if (this.playersGuess === this.winningNumber) {
-            return 'You Win!';
+            feedbackText = `You Win! Looking for ${this.winningNumber}.`;
         } else if (this.pastGuesses.includes(this.playersGuess)) {
-            return 'You have already guessed that number.';
+            feedbackText = 'You have already guessed that number.';
         } else {
             this.pastGuesses.push(this.playersGuess);
-            this.count++;
 
             // if (this.count >= 5) return 'You Lose.';
-            if (this.count >= 10) return 'You Lose.';
+            this.count++;
+
+            // switch(true) {
+            //     case this.difference() < 10:
+            //         return "You're burning up!";
+            //     case this.difference() < 25:
+            //         return "You're lukewarm.";
+            //     case this.difference() < 50:
+            //         return "You're a bit chilly.";
+            //     case this.difference() < 100:
+            //         return "You're ice cold!";
+            // }
+
+            switch (true) {
+                case this.difference() <= 5:
+                    feedbackText = "So close. (within 5)";
+                    break;
+                case this.difference() <= 10:
+                    feedbackText = "Red Hot. (within 10)";
+                    break;
+                case this.difference() <= 15:
+                    feedbackText = "Getting Hot. (within 15)";
+                    break;
+                case this.difference() <= 25:
+                    feedbackText = "Great guess. (within 25)";
+                    break;
+                case this.difference() <= 50:
+                    feedbackText = "Getting warmer. (within 50)";
+                    break;
+                case this.difference() <= 75:
+                    feedbackText = "Getting warm. (within 75)";
+                    break;
+                case this.difference() <= 100:
+                    feedbackText = "You're in the Ballpark. (within 100)";
+                    break;
+                case this.difference() <= 200:
+                    feedbackText = "You're a bit chilly. (within 200)";
+                    break;
+                case this.difference() > 200:
+                    feedbackText = "You're ice cold! (off by over 200)";
+            }
+
+            previousGuess = document.getElementById(`guess${this.count}`);
+            previousGuess.innerHTML = this.playersGuess;
         }
 
-        // switch(true) {
-        //     case this.difference() < 10:
-        //         return "You're burning up!";
-        //     case this.difference() < 25:
-        //         return "You're lukewarm.";
-        //     case this.difference() < 50:
-        //         return "You're a bit chilly.";
-        //     case this.difference() < 100:
-        //         return "You're ice cold!";
-        // }
-
-        switch(true) {
-            case this.difference() <= 5:
-                return "So close. (within 5)";
-            case this.difference() <= 10:
-                return "Red Hot. (within 10)";
-            case this.difference() <= 15:
-                return "Getting Hot. (within 15)";
-            case this.difference() <= 25:
-                return "Great guess. (within 25)";
-            case this.difference() <= 50:
-                return "Getting warmer. (within 50)";
-            case this.difference() <= 75:
-                return "Getting warm. (within 75)";
-            case this.difference() <= 100:
-                return "You're in the Ballpark. (within 100)";
-            case this.difference() > 150:
-                return "You're a bit chilly. (off by over 150)";
-            case this.difference() > 200:
-                return "You're ice cold! (off by over 200)";
+        if (this.count === 10) {
+            feedbackText = `Sorry, you Lose.  Looking for ${this.winningNumber}.`;
         }
+
+        if (this.count <= 10) {
+            displayBox = document.getElementById("finalMessage");
+            displayBox.innerHTML = feedbackText;
+        }  
     }
 
     // provideHint() {
@@ -120,14 +147,57 @@ class Game {
     // }
 
     provideHint() {
-        if (this.isLower()) return "Guess Higher";
-        else return "Guess Lower";
+        if (!document.getElementById("finalMessage").innerHTML.includes('Looking for')) {
+            if (this.isLower()) return "Guess Higher";
+            else return "Guess Lower";
+        } else return '';
     }
 }
 
 function newGame() {
-    return new Game();
+    return new Game();  
 }
+
+function playGame() {
+    let game = newGame();
+
+    const button = document.getElementById("submitButton");
+    const input = document.getElementById("getGuess");
+
+    const hintButton = document.getElementById("hintButton");
+    const secondMessage = document.getElementById("hintMessage")
+
+    const restart = document.getElementById("restart")
+
+    button.addEventListener('click', function () {
+        //PLUS CONVERTS A STRING TO A NUMBER
+        //IT SAYS TO MAKE SOMETHING POSITIVE
+        //SO IT HAS TO CONVERT IT INTO A NUMBER
+        //MINUS SIGN WILL ALSO CONVERT TO A NUMBER AND MAKE NEGATIVE
+        const guess = +input.value;
+
+        input.value = '';
+        secondMessage.innerHTML = '';
+
+        if (!document.getElementById("finalMessage").innerHTML.includes('You Win!')) {
+            game.playersGuessSubmission(guess);
+
+            // alert(guess);
+            // alert(game.count);
+            // alert(game.winningNumber);
+        }
+    })
+
+    hintButton.addEventListener('click', function() {
+        secondMessage.innerHTML = game.provideHint();
+    })
+
+    restart.addEventListener('click', function() {
+        game = newGame();
+    })
+}
+
+playGame();
 
 
 

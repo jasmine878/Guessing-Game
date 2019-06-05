@@ -5,6 +5,15 @@ h2 > span {
     font-style: italic;
 }
 
+#finalMessage {
+    color: red;
+    padding-left: 40px;
+    font-size: 30px;
+    font-weight: bold;
+    height: 100px;
+    width: 400px;
+}
+
 .guess {
     font-size: 40px;
     height: 100px;
@@ -19,4 +28,11 @@ h2 > span {
 
 ul li {
     font-size: 30px;
+}
+
+#hintMessage {
+    font-size: 30px;
+    width: 200px;
+    color: blue;
+    padding-left: 40px;
 }

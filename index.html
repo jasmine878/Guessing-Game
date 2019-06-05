@@ -11,9 +11,10 @@
   <body>
     <h1>Guessing Game</h1>
       <h2>Guess a number between 1 and 1000 <span>(up to 10 chances)</span></h2>
-        <p><input type="number" placeholder="1-1,000" class="guess" min="1" max="1000">
+        <p><input id="getGuess" type="number" placeholder="1-1,000" class="guess" min="1" max="1000">
+          <span id="finalMessage"></span>
           <br>
-          <input type="submit" class="guess"> 
+          <input id="submitButton" type="submit" class="guess"> 
           <br>
           <br>
           <br>
@@ -21,19 +22,21 @@
         <h3>Previous Guesses</h3>
           <p>
             <ul>
-              <li>5</li>
-              <li>100</li>
-              <li>50</li>
-              <li>300</li>
-              <li>900</li>
-              <li>678</li>
-              <li>441</li>
-              <li>739</li>
-              <li>264</li>
-              <li>23</li>
+              <li id='guess1'></li>
+              <li id='guess2'></li>
+              <li id='guess3'></li>
+              <li id='guess4'></li>
+              <li id='guess5'></li>
+              <li id='guess6'></li>
+              <li id='guess7'></li>
+              <li id='guess8'></li>
+              <li id='guess9'></li>
+              <li id='guess10'></li>
             </ul>
           </p>
-          <button class="button">Play again</button> <button class = "button">Hint</button>
+          <button class="button" id="restart">Play again</button> 
+          <button class="button" id="hintButton">Hint</button>
+          <span class="button" id="hintMessage"></span>
        
 
 
