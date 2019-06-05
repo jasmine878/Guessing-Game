@@ -75,6 +75,10 @@ class Game {
 
         if (this.playersGuess === this.winningNumber) {
             feedbackText = `You Win! Looking for ${this.winningNumber}.`;
+            
+            this.count++;
+            previousGuess = document.getElementById(`guess${this.count}`);
+            previousGuess.innerHTML = this.playersGuess;
         } else if (this.pastGuesses.includes(this.playersGuess)) {
             feedbackText = 'You have already guessed that number.';
         } else {
